@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FamilyMapClient"
         tools:targetApi="31"
-        android:usesCleartextTraffic="true">    // FIXME ensure this is correct
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true">
