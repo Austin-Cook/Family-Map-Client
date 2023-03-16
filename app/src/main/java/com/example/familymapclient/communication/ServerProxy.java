@@ -1,12 +1,11 @@
 package com.example.familymapclient.communication;
 
+import com.example.familymapclient.util.Serializer;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -19,21 +18,26 @@ import responses.AllPersonsResponse;
 import responses.RegisterLoginResponse;
 
 public class ServerProxy {
-    public static final String SERVER_HOST = "10.0.2.2";  // IP Address
-    public static final String SERVER_PORT = "FIXME";  // PORT Number FIXME!
-    private final String GET = "GET";
-    private final String AUTHORIZATION = "Authorization";
-    private final String ACCEPT = "Accept";
-    private final String JSON_TYPE = "Application/json";
+    public static final String LOCAL_SERVER_HOST = "localhost";         // IP Address
+    public static final String EMULATOR_SERVER_HOST = "10.0.2.2";  // IP Address
+    public static final String SERVER_PORT = "8080";                    // PORT Number
+    public static final String GET = "GET";
+    public static final String POST = "POST";
+    public static final String AUTHORIZATION = "Authorization";
+    public static final String ACCEPT = "Accept";
+    public static final String JSON_TYPE = "Application/json";
 
-    public ServerProxy() {
+    private final String serverHost;
+
+    public ServerProxy(String serverHost) {
+        this.serverHost = serverHost;
     }
 
-    RegisterLoginResponse login(LoginRequest request) {
+    public RegisterLoginResponse login(LoginRequest request) {
         RegisterLoginResponse registerLoginResponse = null;
 
         try {
-            URL url = new URL("http://" + SERVER_HOST + ":" + SERVER_PORT + "/user/login");
+            URL url = new URL("http://" + serverHost + ":" + SERVER_PORT + "/user/login");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(GET);
 
@@ -51,13 +55,13 @@ public class ServerProxy {
                     ",\n\"password\":" + request.getPassword() + "\n" +
                     "}";    // FIXME MAKE SURE THE FORMATTING IS CORRECT!
             OutputStream reqBody = http.getOutputStream();
-            writeString(reqData, reqBody);
+            Serializer.writeString(reqData, reqBody);
             reqBody.close();
 
             // Process the response
             if (http.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 InputStream resBody = http.getInputStream();
-                String resData = readString(resBody);
+                String resData = Serializer.readString(resBody);
                 System.out.println(resData);
 
                 Gson gson = new Gson();
@@ -65,7 +69,7 @@ public class ServerProxy {
             } else {
                 System.out.println("ERROR: " + http.getResponseMessage());
                 InputStream resBody = http.getErrorStream();
-                String resData = readString(resBody);
+                String resData = Serializer.readString(resBody);
                 System.out.println(resData);
             }
         } catch (IOException e) {
@@ -75,11 +79,11 @@ public class ServerProxy {
         return registerLoginResponse;
     }
 
-    RegisterLoginResponse register(RegisterRequest request) {
+    public RegisterLoginResponse register(RegisterRequest request) {
         RegisterLoginResponse registerLoginResponse = null;
 
         try {
-            URL url = new URL("http://" + SERVER_HOST + ":" + SERVER_PORT + "/user/register");
+            URL url = new URL("http://" + serverHost + ":" + SERVER_PORT + "/user/register");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(GET);
 
@@ -102,13 +106,13 @@ public class ServerProxy {
                             "\t\"gender\":" + request.getGender() + "\n" +
                             "}";    // FIXME MAKE SURE THE FORMATTING IS CORRECT!
             OutputStream reqBody = http.getOutputStream();
-            writeString(reqData, reqBody);
+            Serializer.writeString(reqData, reqBody);
             reqBody.close();
 
             // Process the response
             if (http.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 InputStream resBody = http.getInputStream();
-                String resData = readString(resBody);
+                String resData = Serializer.readString(resBody);
                 System.out.println(resData);
 
                 Gson gson = new Gson();
@@ -116,7 +120,7 @@ public class ServerProxy {
             } else {
                 System.out.println("ERROR: " + http.getResponseMessage());
                 InputStream resBody = http.getErrorStream();
-                String resData = readString(resBody);
+                String resData = Serializer.readString(resBody);
                 System.out.println(resData);
             }
         } catch (IOException e) {
@@ -126,15 +130,15 @@ public class ServerProxy {
         return registerLoginResponse;
     }
 
-    AllPersonsResponse getPeople(AllPersonsRequest request) {
+    public AllPersonsResponse getPeople(AllPersonsRequest request) {
         AllPersonsResponse allPersonsResponse = null;
 
         try {
-            URL url = new URL("http://" + SERVER_HOST + ":" + SERVER_PORT + "/person");
+            URL url = new URL("http://" + serverHost + ":" + SERVER_PORT + "/person");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(GET);
 
-            // Indicate that there will be a request body
+            // Indicate that there will NOT be a request body
             http.setDoOutput(false);
 
             http.addRequestProperty(AUTHORIZATION, request.getAuthtoken());
@@ -147,7 +151,7 @@ public class ServerProxy {
             // Process the response
             if (http.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 InputStream resBody = http.getInputStream();
-                String resData = readString(resBody);
+                String resData = Serializer.readString(resBody);
                 System.out.println(resData);
 
                 Gson gson = new Gson();
@@ -155,7 +159,7 @@ public class ServerProxy {
             } else {
                 System.out.println("ERROR: " + http.getResponseMessage());
                 InputStream resBody = http.getErrorStream();
-                String resData = readString(resBody);
+                String resData = Serializer.readString(resBody);
                 System.out.println(resData);
             }
         } catch (IOException e) {
@@ -165,15 +169,15 @@ public class ServerProxy {
         return allPersonsResponse;
     }
 
-    AllEventsResponse getEvents(AllEventsRequest request) {
+    public AllEventsResponse getEvents(AllEventsRequest request) {
         AllEventsResponse allEventsResponse = null;
 
         try {
-            URL url = new URL("http://" + SERVER_HOST + ":" + SERVER_PORT + "/event");
+            URL url = new URL("http://" + serverHost + ":" + SERVER_PORT + "/event");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(GET);
 
-            // Indicate that there will be a request body
+            // Indicate that there will NOT be a request body
             http.setDoOutput(false);
 
             http.addRequestProperty(AUTHORIZATION, request.getAuthtoken());
@@ -186,7 +190,7 @@ public class ServerProxy {
             // Process the response
             if (http.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 InputStream resBody = http.getInputStream();
-                String resData = readString(resBody);
+                String resData = Serializer.readString(resBody);
                 System.out.println(resData);
 
                 Gson gson = new Gson();
@@ -194,7 +198,7 @@ public class ServerProxy {
             } else {
                 System.out.println("ERROR: " + http.getResponseMessage());
                 InputStream resBody = http.getErrorStream();
-                String resData = readString(resBody);
+                String resData = Serializer.readString(resBody);
                 System.out.println(resData);
             }
         } catch (IOException e) {
@@ -202,24 +206,5 @@ public class ServerProxy {
         }
 
         return allEventsResponse;
-    }
-
-
-    private String readString(InputStream inputStream) throws IOException {
-        InputStreamReader inputReader = new InputStreamReader(inputStream);
-        StringBuilder builder = new StringBuilder();
-        char[] buffer = new char[1024];
-        int len;
-        while ((len = inputReader.read(buffer)) > 0) {
-            builder.append(buffer, 0, len);
-        }
-
-        return builder.toString();
-    }
-
-    private void writeString(String str, OutputStream outputStream) throws IOException {
-        OutputStreamWriter outWriter = new OutputStreamWriter(outputStream);
-        outWriter.write(str);
-        outWriter.flush();
     }
 }
