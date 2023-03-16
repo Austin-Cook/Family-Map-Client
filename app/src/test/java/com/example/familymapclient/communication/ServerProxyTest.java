@@ -1,8 +1,8 @@
 package com.example.familymapclient.communication;
 
+import static com.example.familymapclient.communication.ServerProxy.DEFAULT_SERVER_PORT;
 import static com.example.familymapclient.communication.ServerProxy.LOCAL_SERVER_HOST;
 import static com.example.familymapclient.communication.ServerProxy.POST;
-import static com.example.familymapclient.communication.ServerProxy.SERVER_PORT;
 import static com.example.familymapclient.communication.ServerProxy.ACCEPT;
 import static com.example.familymapclient.communication.ServerProxy.JSON_TYPE;
 
@@ -30,6 +30,7 @@ import responses.RegisterLoginResponse;
 
 public class ServerProxyTest {
     private final String TEST_SERVER_HOST = LOCAL_SERVER_HOST;
+    private final String TEST_SERVER_PORT = DEFAULT_SERVER_PORT;
 
     @BeforeEach
     public void setup() throws IOException {
@@ -50,7 +51,7 @@ public class ServerProxyTest {
                 "firstName", "lastName", "m");
 
         // Get the response
-        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST);
+        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST, TEST_SERVER_PORT);
         RegisterLoginResponse actualResponse = serverProxy.register(registerRequest);
 
         // Will be null if there was an error registering the user
@@ -72,7 +73,7 @@ public class ServerProxyTest {
         // Attempt to log in a nonexistent user
         // Create the login request
         LoginRequest loginRequest = new LoginRequest("username", "password");
-        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST);
+        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST, TEST_SERVER_PORT);
         RegisterLoginResponse loginResponse = serverProxy.login(loginRequest);
 
         assertNull(loginResponse);
@@ -86,7 +87,7 @@ public class ServerProxyTest {
                 "firstName", "lastName", "m");
 
         // Get the response
-        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST);
+        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST, TEST_SERVER_PORT);
         RegisterLoginResponse actualResponse = serverProxy.register(registerRequest);
 
         // Will be null if there was an error registering the user
@@ -103,7 +104,7 @@ public class ServerProxyTest {
                 "firstName", "lastName", "INCORRECT");
 
         // Get the response
-        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST);
+        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST, TEST_SERVER_PORT);
         RegisterLoginResponse actualResponse = serverProxy.register(registerRequest);
 
         // Will be null if there was an error registering the user
@@ -118,7 +119,7 @@ public class ServerProxyTest {
                 "firstName", "lastName", "m");
 
         // Get the response
-        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST);
+        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST, TEST_SERVER_PORT);
         RegisterLoginResponse actualResponse = serverProxy.register(registerRequest);
 
         // Will be null if there was an error registering the user
@@ -141,7 +142,7 @@ public class ServerProxyTest {
         LoginRequest loginRequest = new LoginRequest("sheila", "parker");
 
         // Get the AuthToken
-        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST);
+        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST, TEST_SERVER_PORT);
         RegisterLoginResponse loginResponse = serverProxy.login(loginRequest);
         assertNotNull(loginResponse);
         String authtoken = loginResponse.getAuthtoken();
@@ -165,7 +166,7 @@ public class ServerProxyTest {
         AllPersonsRequest allPersonsRequest = new AllPersonsRequest(authtoken);
 
         // Get the response
-        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST);
+        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST, TEST_SERVER_PORT);
         AllPersonsResponse allPersonsResponse = serverProxy.getPeople(allPersonsRequest);
 
         assertNull(allPersonsResponse);
@@ -180,7 +181,7 @@ public class ServerProxyTest {
         LoginRequest loginRequest = new LoginRequest("sheila", "parker");
 
         // Get the AuthToken
-        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST);
+        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST, TEST_SERVER_PORT);
         RegisterLoginResponse loginResponse = serverProxy.login(loginRequest);
         assertNotNull(loginResponse);
         String authtoken = loginResponse.getAuthtoken();
@@ -204,7 +205,7 @@ public class ServerProxyTest {
         AllEventsRequest allEventsRequest = new AllEventsRequest(authtoken);
 
         // Get the response
-        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST);
+        ServerProxy serverProxy = new ServerProxy(TEST_SERVER_HOST, TEST_SERVER_PORT);
         AllEventsResponse allEventsResponse = serverProxy.getEvents(allEventsRequest);
 
         assertNull(allEventsResponse);
@@ -213,7 +214,7 @@ public class ServerProxyTest {
     private void clear() throws IOException {
         try {
             // Clear the server
-            URL url = new URL("http://" + TEST_SERVER_HOST + ":" + SERVER_PORT + "/clear");
+            URL url = new URL("http://" + TEST_SERVER_HOST + ":" + TEST_SERVER_PORT + "/clear");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(POST);
 
@@ -245,7 +246,7 @@ public class ServerProxyTest {
     private void load() {
         // Load the data
         try {
-            URL url = new URL("http://" + TEST_SERVER_HOST + ":" + SERVER_PORT + "/load");
+            URL url = new URL("http://" + TEST_SERVER_HOST + ":" + TEST_SERVER_PORT + "/load");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(POST);
 
@@ -937,5 +938,4 @@ public class ServerProxyTest {
             e.printStackTrace();
         }
     }
-
 }

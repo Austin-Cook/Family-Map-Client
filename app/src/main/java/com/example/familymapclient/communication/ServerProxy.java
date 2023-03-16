@@ -18,9 +18,9 @@ import responses.AllPersonsResponse;
 import responses.RegisterLoginResponse;
 
 public class ServerProxy {
-    public static final String LOCAL_SERVER_HOST = "localhost";         // IP Address
-    public static final String EMULATOR_SERVER_HOST = "10.0.2.2";  // IP Address
-    public static final String SERVER_PORT = "8080";                    // PORT Number
+    public static final String LOCAL_SERVER_HOST = "localhost";     // IP Address
+    public static final String EMULATOR_SERVER_HOST = "10.0.2.2";   // IP Address
+    public static final String DEFAULT_SERVER_PORT = "8080";        // PORT Number
     public static final String GET = "GET";
     public static final String POST = "POST";
     public static final String AUTHORIZATION = "Authorization";
@@ -28,16 +28,18 @@ public class ServerProxy {
     public static final String JSON_TYPE = "Application/json";
 
     private final String serverHost;
+    private final String serverPort;
 
-    public ServerProxy(String serverHost) {
+    public ServerProxy(String serverHost, String serverPort) {
         this.serverHost = serverHost;
+        this.serverPort = serverPort;
     }
 
     public RegisterLoginResponse login(LoginRequest request) {
         RegisterLoginResponse registerLoginResponse = null;
 
         try {
-            URL url = new URL("http://" + serverHost + ":" + SERVER_PORT + "/user/login");
+            URL url = new URL("http://" + serverHost + ":" + serverPort + "/user/login");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(GET);
 
@@ -53,7 +55,7 @@ public class ServerProxy {
             String reqData =
             "{\n" + "\"username\":" + request.getUsername() +
                     ",\n\"password\":" + request.getPassword() + "\n" +
-                    "}";    // FIXME MAKE SURE THE FORMATTING IS CORRECT!
+                    "}";
             OutputStream reqBody = http.getOutputStream();
             Serializer.writeString(reqData, reqBody);
             reqBody.close();
@@ -83,7 +85,7 @@ public class ServerProxy {
         RegisterLoginResponse registerLoginResponse = null;
 
         try {
-            URL url = new URL("http://" + serverHost + ":" + SERVER_PORT + "/user/register");
+            URL url = new URL("http://" + serverHost + ":" + serverPort + "/user/register");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(GET);
 
@@ -104,7 +106,7 @@ public class ServerProxy {
                             "\t\"firstName\":" + request.getFirstName() + ",\n" +
                             "\t\"lastName\":" + request.getLastName() + ",\n" +
                             "\t\"gender\":" + request.getGender() + "\n" +
-                            "}";    // FIXME MAKE SURE THE FORMATTING IS CORRECT!
+                            "}";
             OutputStream reqBody = http.getOutputStream();
             Serializer.writeString(reqData, reqBody);
             reqBody.close();
@@ -134,7 +136,7 @@ public class ServerProxy {
         AllPersonsResponse allPersonsResponse = null;
 
         try {
-            URL url = new URL("http://" + serverHost + ":" + SERVER_PORT + "/person");
+            URL url = new URL("http://" + serverHost + ":" + serverPort + "/person");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(GET);
 
@@ -173,7 +175,7 @@ public class ServerProxy {
         AllEventsResponse allEventsResponse = null;
 
         try {
-            URL url = new URL("http://" + serverHost + ":" + SERVER_PORT + "/event");
+            URL url = new URL("http://" + serverHost + ":" + serverPort + "/event");
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(GET);
 
