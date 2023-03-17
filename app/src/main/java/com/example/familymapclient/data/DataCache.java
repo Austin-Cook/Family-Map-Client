@@ -12,7 +12,7 @@ public class DataCache {
 
     private static DataCache instance;
 
-    public DataCache getInstance() {
+    public static DataCache getInstance() {
         if (instance == null) {
             instance = new DataCache();
         }
@@ -41,6 +41,7 @@ public class DataCache {
     // TODO Add separate way to store filtered data
 
 
-
-
+    public Settings getSettings() {
+        return settings;
+    }
 }
