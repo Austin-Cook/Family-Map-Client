@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".feature.login.LoginFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/teal_700"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="@string/family_map"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:padding="20dp"
+            android:rowCount="8">
+
+            <TextView
+                android:layout_row="0"
+                android:layout_column="0"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="Server Host:"
+                android:textAlignment="viewEnd"
+                android:textSize="18sp"></TextView>
+
+            <EditText
+                android:id="@+id/serverHostText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:text="Server Host" />
+
+            <TextView
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_gravity="right"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="Server Port:"
+                android:textSize="18sp"></TextView>
+
+            <EditText
+                android:id="@+id/serverPortText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:text="Server Port" />
+
+            <TextView
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_gravity="right"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="Username:"
+                android:textSize="18sp"></TextView>
+
+            <EditText
+                android:id="@+id/usernameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:text="Username" />
+
+            <TextView
+                android:layout_row="3"
+                android:layout_column="0"
+                android:layout_gravity="right"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="Password:"
+                android:textSize="18sp"></TextView>
+
+            <EditText
+                android:id="@+id/passwordText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:text="Password" />
+
+            <TextView
+                android:layout_row="4"
+                android:layout_column="0"
+                android:layout_gravity="right"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="First Name:"
+                android:textSize="18sp"></TextView>
+
+            <EditText
+                android:id="@+id/firstNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="4"
+                android:layout_column="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:text="First Name" />
+
+            <TextView
+                android:layout_row="5"
+                android:layout_column="0"
+                android:layout_gravity="right"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="Last Name:"
+                android:textSize="18sp"></TextView>
+
+            <EditText
+                android:id="@+id/lastNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="5"
+                android:layout_column="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:text="Last Name" />
+
+            <TextView
+                android:layout_row="6"
+                android:layout_column="0"
+                android:layout_gravity="right"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="Email:"
+                android:textSize="18sp"></TextView>
+
+            <EditText
+                android:id="@+id/emailText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="6"
+                android:layout_column="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:text="Email" />
+
+            <TextView
+                android:layout_row="7"
+                android:layout_column="0"
+                android:layout_gravity="right"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="Gender:"
+                android:textSize="18sp"></TextView>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="7"
+                android:layout_column="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="31dp"
+                        android:layout_height="wrap_content"
+                        android:hapticFeedbackEnabled="true" />
+
+                    <TextView
+                        android:id="@+id/maleTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:text="Male" />
+
+                    <RadioButton
+                        android:layout_width="31dp"
+                        android:layout_height="wrap_content"
+                        android:hapticFeedbackEnabled="true" />
+
+                    <TextView
+                        android:id="@+id/femaleTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Female" />
+
+                </LinearLayout>
+            </RadioGroup>
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/logInButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:hapticFeedbackEnabled="true"
+                android:text="LOGIN"></Button>
+
+            <Button
+                android:id="@+id/registerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hapticFeedbackEnabled="true"
+                android:text="REGISTER"></Button>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

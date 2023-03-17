@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Family Map Client</string>
+    <string name="family_map">Family Map</string>
 </resources>
